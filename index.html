@@ -1,0 +1,25 @@
+
+<!doctype html>
+<html>
+<!-- Copyright 2015 The Chromium Authors. All rights reserved.
+     Use of this source code is governed by a BSD-style license that can be
+     found in the LICENSE file. -->
+<head>
+  <meta charset="utf-8">
+  <title>Require JS Resource plugin testing</title>
+  <script src="js/jquery-1.11.2.min.js"></script>
+  <script src="js/require.js"></script>
+  <script src="js/config.js"></script>
+  <script>window.$ = window.jQuery;</script>
+  <script>require(['main']);</script>
+  
+  <style type="text/css">
+		#foo {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+ <span id="foo">open console...</span>
+</body>
+</html>
