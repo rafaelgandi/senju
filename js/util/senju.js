@@ -14,10 +14,7 @@
 	if (typeof $ === 'undefined') { throw 'jQuery is required to use senju plugin'; }
 	if (typeof JSON === 'undefined') { throw 'JSON is required to use senju plugin'; }
 	var $body = $('body'),
-		$head = $('head'),
-		RESPONSE_OBJ = {
-			templates: {}
-		};
+		$head = $('head');
 	
 	function getResource(_file, _callback) { // AJAX call to resource file
 		_callback = _callback || function () {};
@@ -148,6 +145,7 @@
 	// See: http://requirejs.org/docs/plugins.html
 	define({	
 		load: function (name, req, onLoad, config) {
+			var	RESPONSE_OBJ = { templates: {} };
 			getResource(resolveResourceName(req.toUrl(name)), function (res) {
 				var $temp = createTempElement(),					
 					resourceElements;
