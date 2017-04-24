@@ -91,4 +91,4 @@ Resource files are normal html files with a twist.
 MIT
 
 ## Senju of the Thousand Hands
-<a href=""https://www.google.com.ph/search?q=senju+naruto&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiSis_V7bvTAhVHWrwKHT3wAX8Q_AUICCgB&biw=1438&bih=725#tbm=isch&q=senju+of+the+thousand+hands&imgdii=M_F_Bp-uaQO7WM:&imgrc=6pO2R8n5_SZpCM:><img src="senju_of_a_thousand_hands.png"></a>
+<a href="https://www.google.com.ph/search?q=senju+naruto&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiSis_V7bvTAhVHWrwKHT3wAX8Q_AUICCgB&biw=1438&bih=725#tbm=isch&q=senju+of+the+thousand+hands&imgdii=M_F_Bp-uaQO7WM:&imgrc=6pO2R8n5_SZpCM:"><img src="senju_of_a_thousand_hands.png"></a>
