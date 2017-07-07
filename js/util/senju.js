@@ -3,7 +3,7 @@
 	-----
 	Resource loader require js plugin.
 	Author: Rafael Gandionco (www.rafaelgandi.tk)
-	LM: 2017-04-24
+	LM: 2017-07-07
 	
 	@license RequireJS Senju Copyright (c) 2017
 	Available via the MIT license.
@@ -18,7 +18,7 @@
 	
 	function getResource(_file, _callback) { // AJAX call to resource file
 		_callback = _callback || function () {};
-		$.get(_file+'?_='+(new Date()).getTime(), _callback);
+		$.get(_file, _callback);
 	}
 	
 	function createTempElement() {
@@ -145,8 +145,12 @@
 	// See: http://requirejs.org/docs/plugins.html
 	define({	
 		load: function (name, req, onLoad, config) {
-			var	RESPONSE_OBJ = { templates: {} };
-			getResource(resolveResourceName(req.toUrl(name)), function (res) {
+			var	RESPONSE_OBJ = { templates: {} },
+				cacheBuster = (new Date()).getTime();
+			if (typeof config.urlArgs !== 'undefined') {
+				cacheBuster = config.urlArgs('', '').replace(/^[\?\&][\S]+=/, '');
+			}
+			getResource(resolveResourceName(req.toUrl(name)) + '?_=' + cacheBuster, function (res) {
 				var $temp = createTempElement(),					
 					resourceElements;
 				$temp.detach().html(res);
