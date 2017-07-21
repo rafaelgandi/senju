@@ -1,10 +1,10 @@
-define(function (require) {
+define((require) => {
 	"use strict";
 	require('util/domReady!');
 	var r2 = require('senju!resources/r1.html');
 	
 	return {
-		init: function () {
+		init: () => {
 			return 'hi from mod2';
 		}
 	};
