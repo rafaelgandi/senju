@@ -3,7 +3,7 @@
 	-----
 	Resource loader require js plugin.
 	Author: Rafael Gandionco (www.rafaelgandi.tk)
-	LM: 2017-07-07
+	LM: 2017-07-31
 	
 	@license RequireJS Senju Copyright (c) 2017
 	Available via the MIT license.
@@ -141,19 +141,54 @@
 		return name;
 	}
 	
+	function nameEncoder(_moduleName, _name) {
+		var mod = _moduleName.replace(/\//ig, '_');
+		return mod + '8__' + _name + '__8';
+	}
+	
+	function processSenjuName(_moduleName, _resourceString) {
+		var processedResourceString = '',
+			nameObj = {},
+			senjuNameRegExp = /@senjuName\(([\S]+)\)/ig,
+			lines = _resourceString.split("\n");	
+		for (var i = 0; i < lines.length; i++) {
+			processedResourceString += lines[i].replace(senjuNameRegExp, function (match, name) {
+				// Save the name for reference //
+				nameObj[name] = nameEncoder(_moduleName, name);
+				return nameObj[name];
+			});
+		}
+		return {
+			nameObj: nameObj,
+			processedResourceString: processedResourceString
+		};	
+	}
+	
 	// Require JS plugin API //
 	// See: http://requirejs.org/docs/plugins.html
 	define({	
 		load: function (name, req, onLoad, config) {
-			var	RESPONSE_OBJ = { templates: {} },
+			var	RESPONSE_OBJ = { 
+					templates: {},
+					names: {},
+					getTemplate: function (_id) { return RESPONSE_OBJ.templates[_id]; }, 
+					getName: function (_name) { 
+						if (typeof RESPONSE_OBJ.names[_name] == 'undefined') {
+							RESPONSE_OBJ.names[_name] = nameEncoder(name, _name);
+						}
+						return RESPONSE_OBJ.names[_name]; 
+					} 
+				},
 				cacheBuster = (new Date()).getTime();
 			if (typeof config.urlArgs !== 'undefined') {
 				cacheBuster = config.urlArgs('', '').replace(/^[\?\&][\S]+=/, '');
 			}
 			getResource(resolveResourceName(req.toUrl(name)) + '?_=' + cacheBuster, function (res) {
 				var $temp = createTempElement(),					
-					resourceElements;
-				$temp.detach().html(res);
+					resourceElements,
+					processed = processSenjuName(name, res);
+				RESPONSE_OBJ.names = processed.nameObj;
+				$temp.detach().html(processed.processedResourceString);
 				resourceElements = getResourceElements($temp);
 				$temp.remove();
 				// Get templates. //	
